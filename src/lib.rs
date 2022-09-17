@@ -75,7 +75,7 @@ pub fn real_ip(
         move |addr: Option<SocketAddr>, forwarded_for: Vec<IpAddr>| {
             addr.map(|addr| {
                 let hops = forwarded_for.iter().copied().chain(once(addr.ip()));
-                for hop in hops.rev() {
+                for hop in hops {
                     if !trusted_proxies.contains(&hop) {
                         return hop;
                     }

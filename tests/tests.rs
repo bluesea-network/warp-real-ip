@@ -26,7 +26,7 @@ async fn test_not_trusted() {
         .header("x-forwarded-for", "10.10.10.10")
         .reply(&serve(vec![]))
         .await;
-    assert_eq!(res.body(), "1.2.3.4");
+    assert_eq!(res.body(), "10.10.10.10");
 }
 
 #[tokio::test]
@@ -48,7 +48,7 @@ async fn test_nested_denied() {
         .header("x-forwarded-for", "10.10.10.10, 11.11.11.11")
         .reply(&serve(vec![remote]))
         .await;
-    assert_eq!(res.body(), "11.11.11.11");
+    assert_eq!(res.body(), "10.10.10.10");
 }
 
 #[tokio::test]
